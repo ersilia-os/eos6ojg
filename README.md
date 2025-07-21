@@ -2,8 +2,7 @@
 
 Check whether compounds match with known antibiotics available from GARDPs AntibioticDB database. The tool simply performs Morgan fingerprint (radius 2, 1024 bits) with the Tanimoto similarity. Multiple similarity cutoffs are tested.
 
-This model was incorporated on 2025-07-19.
-
+This model was incorporated on 2025-07-19.Last packaged on 2025-07-21.
 
 ## Information
 ### Identifiers
@@ -38,12 +37,19 @@ Below are the **Output Columns** of the model:
 ### Source and Deployment
 - **Source:** `Local`
 - **Source Type:** `Internal`
+- **DockerHub**: [https://hub.docker.com/r/ersiliaos/eos6ojg](https://hub.docker.com/r/ersiliaos/eos6ojg)
+- **Docker Architecture:** `AMD64`
 - **S3 Storage**: [https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos6ojg.zip](https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos6ojg.zip)
 
 ### Resource Consumption
 - **Model Size (Mb):** `2`
 - **Environment Size (Mb):** `940`
+- **Image Size (Mb):** `820.79`
 
+**Computational Performance (seconds):**
+- 10 inputs: `27`
+- 100 inputs: `17.15`
+- 10000 inputs: `97.52`
 
 ### References
 - **Source Code**: [https://antibioticdb.com/](https://antibioticdb.com/)
