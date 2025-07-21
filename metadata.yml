@@ -1,6 +1,6 @@
 Identifier: eos6ojg
 Slug: antibioticdb-similarity-matches
-Status: In progress
+Status: Ready
 Title: AntibioticDB similarity matches matches
 Description: Check whether compounds match with known antibiotics available from
   GARDPs AntibioticDB database. The tool simply performs Morgan fingerprint 
@@ -33,6 +33,15 @@ Publication: https://pubmed.ncbi.nlm.nih.gov/29897476/
 Source Code: https://antibioticdb.com/
 License: GPL-3.0-only
 Incorporation Date: '2025-07-19'
+Last Packaging Date: '2025-07-21'
 S3: https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos6ojg.zip
+DockerHub: https://hub.docker.com/r/ersiliaos/eos6ojg
+Docker Architecture: AMD64
 Model Size: 2.0
 Environment Size: 940.0
+Image Size: 820.79
+Computational Performance 1: 27.0
+Computational Performance 2: 16.95
+Computational Performance 3: 17.15
+Computational Performance 4: 31.21
+Computational Performance 5: 97.52
