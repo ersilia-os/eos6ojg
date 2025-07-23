@@ -3,3 +3,4 @@ S=C(Nc1ccc(Cl)cc1)N1CCOCC1
 NCCCC(N)CC(=O)NC1C(NC2=N[C@@H]3C(=O)NC[C@@H](O)[C@H]3N2)OC(CO)C(OC(N)=O)C1O
 CO[C@@H]1[C@@H](OC(=O)c2ccc(C)[nH]2)[C@@H](O)[C@H](Oc2ccc3c(O)c(NC(=O)c4ccc(O)c(CC=C(C)C)c4)c(=O)oc3c2Cl)OC1(C)C
 CC(=O)Oc1ccccc1C(=O)O
+C[C@H]1COc2c(N3CCCCO3)c(F)cc3c(=O)c(C(=O)O)cn1c23
