@@ -1,47 +1,32 @@
 Identifier: eos6ojg
 Slug: antibioticdb-similarity-matches
-Status: Ready
+Status: In progress
 Title: AntibioticDB similarity matches matches
-Description: Check whether compounds match with known antibiotics available from
-  GARDPs AntibioticDB database. The tool simply performs Morgan fingerprint 
-  (radius 2, 1024 bits) with the Tanimoto similarity. Multiple similarity 
-  cutoffs are tested.
+Description: Check whether compounds match with known antibiotics available from GARDP's
+  AntibioticDB database. The tool simply performs Morgan fingerprint (radius 2, 1024 bits) with the Tanimoto similarity. Multiple similarity cutoffs are tested.
+  The model also performs a simple (Naive Bayes) binary classification based on Murcko and BRICS scaffolds.
 Deployment:
-  - Local
+- Local
 Source: Local
 Source Type: Internal
 Task: Annotation
 Subtask: Activity prediction
 Input:
-  - Compound
+- Compound
 Input Dimension: 1
 Output:
-  - Value
+- Value
 Output Dimension: 4
 Output Consistency: Fixed
-Interpretation: Number of compounds in AntiboticDB similar to the input 
-  compound.
+Interpretation: 'Number of compounds in AntiboticDB similar to the input compound above a given cutoff (num_sim) and probability of being an antibiotic compound based on scaffolds (scaff_class).'
 Tag:
-  - Antimicrobial activity
+- Antimicrobial activity
 Biomedical Area:
-  - Antimicrobial resistance
+- Antimicrobial resistance
 Target Organism:
-  - Any
+- Any
 Publication Type: Peer reviewed
 Publication Year: 2025
 Publication: https://pubmed.ncbi.nlm.nih.gov/29897476/
 Source Code: https://antibioticdb.com/
 License: GPL-3.0-only
-Incorporation Date: '2025-07-19'
-Last Packaging Date: '2025-07-21'
-S3: https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos6ojg.zip
-DockerHub: https://hub.docker.com/r/ersiliaos/eos6ojg
-Docker Architecture: AMD64
-Model Size: 2.0
-Environment Size: 940.0
-Image Size: 820.79
-Computational Performance 1: 27.0
-Computational Performance 2: 16.95
-Computational Performance 3: 17.15
-Computational Performance 4: 31.21
-Computational Performance 5: 97.52
