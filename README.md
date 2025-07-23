@@ -49,9 +49,9 @@ Below are the **Output Columns** of the model:
 - **Image Size (Mb):** `820.73`
 
 **Computational Performance (seconds):**
-- 10 inputs: `27.53`
-- 100 inputs: `18.5`
-- 10000 inputs: `143.65`
+- 10 inputs: `27.49`
+- 100 inputs: `17.91`
+- 10000 inputs: `137.34`
 
 ### References
 - **Source Code**: [https://antibioticdb.com/](https://antibioticdb.com/)
