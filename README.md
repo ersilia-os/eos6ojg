@@ -1,6 +1,6 @@
 # AntibioticDB similarity matches matches
 
-Check whether compounds match with known antibiotics available from GARDPs AntibioticDB database. The tool simply performs Morgan fingerprint (radius 2, 1024 bits) with the Tanimoto similarity. Multiple similarity cutoffs are tested.
+Check whether compounds match with known antibiotics available from GARDP's AntibioticDB database. The tool simply performs Morgan fingerprint (radius 2, 1024 bits) with the Tanimoto similarity. Multiple similarity cutoffs are tested. The model also performs a simple (Naive Bayes) binary classification based on Murcko and BRICS scaffolds.
 
 This model was incorporated on 2025-07-19.Last packaged on 2025-07-21.
 
@@ -21,17 +21,19 @@ This model was incorporated on 2025-07-19.Last packaged on 2025-07-21.
 - **Input Dimension:** `1`
 
 ### Output
-- **Output Dimension:** `4`
+- **Output Dimension:** `6`
 - **Output Consistency:** `Fixed`
-- **Interpretation:** Number of compounds in AntiboticDB similar to the input compound.
+- **Interpretation:** Number of compounds in AntiboticDB similar to the input compound above a given cutoff (num_sim) and probability of being an antibiotic compound based on scaffolds (scaff_class).
 
 Below are the **Output Columns** of the model:
 | Name | Type | Direction | Description |
 |------|------|-----------|-------------|
+| num_sim_0_3 | integer | high | Number of compounds in AntibioticDB with a Tanimoto similarity equal or greater than 0.3 |
 | num_sim_0_5 | integer | high | Number of compounds in AntibioticDB with a Tanimoto similarity equal or greater than 0.5 |
 | num_sim_0_7 | integer | high | Number of compounds in AntibioticDB with a Tanimoto similarity equal or greater than 0.7 |
 | num_sim_0_9 | integer | high | Number of compounds in AntibioticDB with a Tanimoto similarity equal or greater than 0.9 |
 | num_sim_1_0 | integer | high | Number of compounds in AntibioticDB with a Tanimoto similarity equal or greater than 1.0 |
+| scaff_class | integer | high | Simple binary classification indicating whether the scaffolds found within the molecule are likely antibiotic scaffolds |
 
 
 ### Source and Deployment
