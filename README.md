@@ -28,7 +28,7 @@ This model was incorporated on 2025-07-19.Last packaged on 2025-07-23.
 Below are the **Output Columns** of the model:
 | Name | Type | Direction | Description |
 |------|------|-----------|-------------|
-| scaff_class_all | integer | high | Simple binary classification indicating whether the scaffolds found within the molecule are likely antibiotic scaffolds based on all of AntibioticDB |
+| scaff_class | integer | high | Simple binary classification indicating whether the scaffolds found within the molecule are likely antibiotic scaffolds based on all of AntibioticDB |
 | num_sim_0_3_all | integer | high | Number of compounds in AntibioticDB with a Tanimoto similarity equal or greater than 0.3 |
 | num_sim_0_5_all | integer | high | Number of compounds in AntibioticDB with a Tanimoto similarity equal or greater than 0.5 |
 | num_sim_0_7_all | integer | high | Number of compounds in AntibioticDB with a Tanimoto similarity equal or greater than 0.7 |
