@@ -21,21 +21,25 @@ This model was incorporated on 2025-07-19.Last packaged on 2025-07-23.
 - **Input Dimension:** `1`
 
 ### Output
-- **Output Dimension:** `6`
+- **Output Dimension:** `11`
 - **Output Consistency:** `Fixed`
-- **Interpretation:** Number of compounds in AntiboticDB similar to the input compound above a given cutoff (num_sim) and probability of being an antibiotic compound based on scaffolds (scaff_class).
+- **Interpretation:** Number of compounds in AntiboticDB similar to the input compound above a given cutoff (num_sim) and probability of being an antibiotic compound based on scaffolds (scaff_class). Similarities are done against the full database (all) as well as a subset of manually curated compounds (254).
 
 Below are the **Output Columns** of the model:
 | Name | Type | Direction | Description |
 |------|------|-----------|-------------|
-| num_sim_0_3 | integer | high | Number of compounds in AntibioticDB with a Tanimoto similarity equal or greater than 0.3 |
-| num_sim_0_5 | integer | high | Number of compounds in AntibioticDB with a Tanimoto similarity equal or greater than 0.5 |
-| num_sim_0_7 | integer | high | Number of compounds in AntibioticDB with a Tanimoto similarity equal or greater than 0.7 |
-| num_sim_0_9 | integer | high | Number of compounds in AntibioticDB with a Tanimoto similarity equal or greater than 0.9 |
-| num_sim_1_0 | integer | high | Number of compounds in AntibioticDB with a Tanimoto similarity equal or greater than 1.0 |
-| scaff_class | integer | high | Simple binary classification indicating whether the scaffolds found within the molecule are likely antibiotic scaffolds |
+| scaff_class_all | integer | high | Simple binary classification indicating whether the scaffolds found within the molecule are likely antibiotic scaffolds based on all of AntibioticDB |
+| num_sim_0_3_all | integer | high | Number of compounds in AntibioticDB with a Tanimoto similarity equal or greater than 0.3 |
+| num_sim_0_5_all | integer | high | Number of compounds in AntibioticDB with a Tanimoto similarity equal or greater than 0.5 |
+| num_sim_0_7_all | integer | high | Number of compounds in AntibioticDB with a Tanimoto similarity equal or greater than 0.7 |
+| num_sim_0_9_all | integer | high | Number of compounds in AntibioticDB with a Tanimoto similarity equal or greater than 0.9 |
+| num_sim_1_0_all | integer | high | Number of compounds in AntibioticDB with a Tanimoto similarity equal or greater than 1.0 |
+| num_sim_0_3_subset | integer | high | Number of compounds in a curated subset of AntibioticDB with a Tanimoto similarity equal or greater than 0.3 |
+| num_sim_0_5_subset | integer | high | Number of compounds in a curated subset of AntibioticDB with a Tanimoto similarity equal or greater than 0.5 |
+| num_sim_0_7_subset | integer | high | Number of compounds in a curated subset of AntibioticDB with a Tanimoto similarity equal or greater than 0.7 |
+| num_sim_0_9_subset | integer | high | Number of compounds in a curated subset of AntibioticDB with a Tanimoto similarity equal or greater than 0.9 |
 
-
+_10 of 11 columns are shown_
 ### Source and Deployment
 - **Source:** `Local`
 - **Source Type:** `Internal`
