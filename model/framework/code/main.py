@@ -7,7 +7,7 @@ import numpy as np
 from FPSim2 import FPSim2Engine
 from tqdm import tqdm
 import pandas as pd
-import multiprocessing
+# import multiprocessing
 
 # NUM_CPU = max(1, int(multiprocessing.cpu_count() / 2))
 NUM_CPU = 1
@@ -33,33 +33,6 @@ with open(input_file, "r") as f:
 
 print("Processed SMILES in input:", len(smiles_list))
 
-print("Loading FPSim2 database...")
-fp_database = os.path.join(checkpoints_dir, "fpsim2_database.h5")
-fpe = FPSim2Engine(fp_database, in_memory_fps=True)
-
-print("Counting similarities...")
-SIM_THRESHOLDS = [0.3, 0.5, 0.7, 0.9, 1.0]
-C = np.zeros((len(smiles_list), len(SIM_THRESHOLDS)), dtype=int)
-for j, smiles in tqdm(enumerate(smiles_list)):
-    results = fpe.similarity(
-        smiles,
-        metric="tanimoto",
-        threshold=min(SIM_THRESHOLDS),
-        n_workers=NUM_CPU
-    )
-    counts = [0]*len(SIM_THRESHOLDS)
-    for i, sim_threshold in enumerate(SIM_THRESHOLDS):
-        c = 0
-        for r in results:
-            if r[1] >= sim_threshold:
-                c += 1
-        counts[i] = c
-    C[j, :] = counts
-
-cols = [f"num_sim_{thresh}".replace(".", "_") for thresh in SIM_THRESHOLDS]
-
-df = pd.DataFrame(C, columns=cols)
-
 print("Predicting the assignment based on Scaffolds")
 
 vectorizer_file = os.path.join(root, "..", "..", "checkpoints", "vectorizer.joblib")
@@ -84,6 +57,60 @@ for proba in probas:
     else:
         y_hat += [0]
 
-df["scaff_class"] = y_hat
+df = pd.DataFrame({"scaff_class": y_hat})
+
+print("Loading FPSim2 database...")
+fp_database = os.path.join(checkpoints_dir, "fpsim2_database.h5")
+fpe = FPSim2Engine(fp_database, in_memory_fps=True)
+
+print("Counting similarities...")
+SIM_THRESHOLDS = [0.3, 0.5, 0.7, 0.9, 1.0]
+C = np.zeros((len(smiles_list), len(SIM_THRESHOLDS)), dtype=int)
+for j, smiles in tqdm(enumerate(smiles_list)):
+    results = fpe.similarity(
+        smiles,
+        metric="tanimoto",
+        threshold=min(SIM_THRESHOLDS),
+        n_workers=NUM_CPU
+    )
+    counts = [0]*len(SIM_THRESHOLDS)
+    for i, sim_threshold in enumerate(SIM_THRESHOLDS):
+        c = 0
+        for r in results:
+            if r[1] >= sim_threshold:
+                c += 1
+        counts[i] = c
+    C[j, :] = counts
+
+cols = [f"num_sim_{thresh}_all".replace(".", "_") for thresh in SIM_THRESHOLDS]
+
+df = pd.concat([df, pd.DataFrame(C, columns=cols)], axis=1)
+
+print("Loading FPSim2 database for the subset...")
+fp_database = os.path.join(checkpoints_dir, "fpsim2_database_subset.h5")
+fpe = FPSim2Engine(fp_database, in_memory_fps=True)
+
+print("Counting similarities...")
+SIM_THRESHOLDS = [0.3, 0.5, 0.7, 0.9, 1.0]
+C = np.zeros((len(smiles_list), len(SIM_THRESHOLDS)), dtype=int)
+for j, smiles in tqdm(enumerate(smiles_list)):
+    results = fpe.similarity(
+        smiles,
+        metric="tanimoto",
+        threshold=min(SIM_THRESHOLDS),
+        n_workers=NUM_CPU
+    )
+    counts = [0]*len(SIM_THRESHOLDS)
+    for i, sim_threshold in enumerate(SIM_THRESHOLDS):
+        c = 0
+        for r in results:
+            if r[1] >= sim_threshold:
+                c += 1
+        counts[i] = c
+    C[j, :] = counts
+
+cols = [f"num_sim_{thresh}_subset".replace(".", "_") for thresh in SIM_THRESHOLDS]
+
+df = pd.concat([df, pd.DataFrame(C, columns=cols)], axis=1)
 
 df.to_csv(output_file, index=False)

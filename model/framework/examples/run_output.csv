@@ -1,6 +1,6 @@
-num_sim_0_3,num_sim_0_5,num_sim_0_7,num_sim_0_9,num_sim_1_0,scaff_class
-1,1,1,1,1,0
-10,5,5,5,1,1
-9,7,5,1,1,1
-5,0,0,0,0,0
-104,4,0,0,0,1
+scaff_class,num_sim_0_3_all,num_sim_0_5_all,num_sim_0_7_all,num_sim_0_9_all,num_sim_1_0_all,num_sim_0_3_subset,num_sim_0_5_subset,num_sim_0_7_subset,num_sim_0_9_subset,num_sim_1_0_subset
+0,1,1,1,1,1,1,0,0,0,0
+1,10,5,5,5,1,0,0,0,0,0
+1,9,7,5,1,1,1,1,1,0,0
+0,5,0,0,0,0,1,0,0,0,0
+1,104,4,0,0,0,21,3,0,0,0
