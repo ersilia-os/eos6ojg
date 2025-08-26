@@ -22,8 +22,8 @@ Output Dimension: 11
 Output Consistency: Fixed
 Interpretation: Number of compounds in AntiboticDB similar to the input compound
   above a given cutoff (num_sim) and probability of being an antibiotic compound
-  based on scaffolds (scaff_class). Similarities are done against the full database (all)
-  as well as a subset of manually curated compounds (254).
+  based on scaffolds (scaff_class). Similarities are done against the full 
+  database (all) as well as a subset of manually curated compounds (254).
 Tag:
   - Antimicrobial activity
 Biomedical Area:
