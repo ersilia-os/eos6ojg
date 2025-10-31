@@ -1,3 +1,10 @@
+try:
+    import packaging
+except ImportError:
+    from pip._internal import main as pip_main
+    pip_main(['install', 'packaging'])
+    import packaging
+
 import os
 import sys
 import csv
@@ -8,13 +15,6 @@ from FPSim2 import FPSim2Engine
 from tqdm import tqdm
 import pandas as pd
 # import multiprocessing
-
-try:
-    import packaging
-except ImportError:
-    from pip._internal import main as pip_main
-    pip_main(['install', 'packaging'])
-    import packaging
 
 # NUM_CPU = max(1, int(multiprocessing.cpu_count() / 2))
 NUM_CPU = 1
