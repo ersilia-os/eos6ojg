@@ -36,16 +36,16 @@ Publication: https://pubmed.ncbi.nlm.nih.gov/29897476/
 Source Code: https://antibioticdb.com/
 License: GPL-3.0-only
 Incorporation Date: '2025-07-19'
-Last Packaging Date: '2025-09-03'
+Last Packaging Date: '2025-10-31'
 Release: v1.0.0
 S3: https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos6ojg.zip
 DockerHub: https://hub.docker.com/r/ersiliaos/eos6ojg
 Docker Architecture: AMD64
 Model Size: 2.0
 Environment Size: 949.0
-Image Size: 840.53
+Image Size: 846.72
 Computational Performance 1: 28.66
-Computational Performance 2: 18.31
-Computational Performance 3: 19.0
-Computational Performance 4: 42.48
-Computational Performance 5: 146.18
+Computational Performance 2: 18.5
+Computational Performance 3: 19.34
+Computational Performance 4: 41.64
+Computational Performance 5: 141.85
