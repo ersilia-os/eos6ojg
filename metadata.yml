@@ -42,7 +42,7 @@ S3: https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos6ojg.zip
 DockerHub: https://hub.docker.com/r/ersiliaos/eos6ojg
 Docker Architecture: AMD64
 Model Size: 2.0
-Environment Size: 942.0
+Environment Size: 949.0
 Image Size: 840.53
 Computational Performance 1: 28.66
 Computational Performance 2: 18.31
