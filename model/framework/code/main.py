@@ -1,10 +1,3 @@
-try:
-    import packaging
-except ImportError:
-    from pip._internal import main as pip_main
-    pip_main(['install', 'packaging'])
-    import packaging
-
 import os
 import sys
 import csv
