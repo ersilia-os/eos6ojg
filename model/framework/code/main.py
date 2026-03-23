@@ -22,95 +22,146 @@ checkpoints_dir = os.path.abspath(os.path.join(root, "..", "..", "checkpoints"))
 input_file = sys.argv[1]
 output_file = sys.argv[2]
 
-smiles_list = []
+# Read all raw SMILES, preserving order and count
+raw_smiles_list = []
 with open(input_file, "r") as f:
     reader = csv.reader(f)
     header = next(reader)
     for r in reader:
-        smiles = preprocess(r[0])
-        if smiles:
-            smiles_list += [smiles]
+        raw_smiles_list.append(r[0])
+
+# Preprocess each SMILES individually, tracking which ones succeed
+# valid_smiles: list of (original_index, preprocessed_smiles)
+valid_entries = []
+failed_indices = set()
+for i, smiles in enumerate(raw_smiles_list):
+    try:
+        processed = preprocess(smiles)
+        if processed:
+            valid_entries.append((i, processed))
+        else:
+            failed_indices.add(i)
+    except Exception:
+        failed_indices.add(i)
+
+valid_indices = [e[0] for e in valid_entries]
+smiles_list = [e[1] for e in valid_entries]
 
 print("Processed SMILES in input:", len(smiles_list))
 
-print("Predicting the assignment based on Scaffolds")
+# Output columns
+OUTPUT_COLS = [
+    "scaff_class",
+    "num_sim_0_3_all", "num_sim_0_5_all", "num_sim_0_7_all", "num_sim_0_9_all", "num_sim_1_0_all",
+    "num_sim_0_3_subset", "num_sim_0_5_subset", "num_sim_0_7_subset", "num_sim_0_9_subset", "num_sim_1_0_subset",
+]
+EMPTY_ROW = [""] * len(OUTPUT_COLS)
 
-vectorizer_file = os.path.join(root, "..", "..", "checkpoints", "vectorizer.joblib")
-model_file = os.path.join(root, "..", "..", "checkpoints", "model.joblib")
-data_file = os.path.join(root, "..", "..", "checkpoints", "data.json")
+# Prepare result array: None means not yet filled
+results = [None] * len(raw_smiles_list)
 
-with open(data_file, "r") as f:
-    data = json.load(f)
+if smiles_list:
+    print("Predicting the assignment based on Scaffolds")
 
-threshold = data["best_threshold"]
+    vectorizer_file = os.path.join(root, "..", "..", "checkpoints", "vectorizer.joblib")
+    model_file = os.path.join(root, "..", "..", "checkpoints", "model.joblib")
+    data_file = os.path.join(root, "..", "..", "checkpoints", "data.json")
 
-vectorizer = joblib.load(vectorizer_file)
-model = joblib.load(model_file)
+    with open(data_file, "r") as f:
+        data = json.load(f)
 
-texts = get_scaffolds_text(smiles_list)
-X = vectorizer.transform(texts)
-probas = model.predict_proba(X)[:,1]
-y_hat = []
-for proba in probas:
-    if proba >= threshold:
-        y_hat += [1]
-    else:
-        y_hat += [0]
+    threshold = data["best_threshold"]
 
-df = pd.DataFrame({"scaff_class": y_hat})
+    vectorizer = joblib.load(vectorizer_file)
+    model = joblib.load(model_file)
 
-print("Loading FPSim2 database...")
-fp_database = os.path.join(checkpoints_dir, "fpsim2_database.h5")
-fpe = FPSim2Engine(fp_database, in_memory_fps=True)
+    # Process scaffold prediction per molecule with try/except
+    scaff_classes = []
+    scaffold_failed = []
+    for j, smiles in enumerate(smiles_list):
+        try:
+            texts = get_scaffolds_text([smiles])
+            X = vectorizer.transform(texts)
+            proba = model.predict_proba(X)[0, 1]
+            scaff_class = 1 if proba >= threshold else 0
+            scaff_classes.append(scaff_class)
+            scaffold_failed.append(False)
+        except Exception:
+            scaff_classes.append(None)
+            scaffold_failed.append(True)
 
-print("Counting similarities...")
-SIM_THRESHOLDS = [0.3, 0.5, 0.7, 0.9, 1.0]
-C = np.zeros((len(smiles_list), len(SIM_THRESHOLDS)), dtype=int)
-for j, smiles in tqdm(enumerate(smiles_list)):
-    results = fpe.similarity(
-        smiles,
-        metric="tanimoto",
-        threshold=min(SIM_THRESHOLDS),
-        n_workers=NUM_CPU
-    )
-    counts = [0]*len(SIM_THRESHOLDS)
-    for i, sim_threshold in enumerate(SIM_THRESHOLDS):
-        c = 0
-        for r in results:
-            if r[1] >= sim_threshold:
-                c += 1
-        counts[i] = c
-    C[j, :] = counts
+    print("Loading FPSim2 database...")
+    fp_database = os.path.join(checkpoints_dir, "fpsim2_database.h5")
+    fpe_all = FPSim2Engine(fp_database, in_memory_fps=True)
 
-cols = [f"num_sim_{thresh}_all".replace(".", "_") for thresh in SIM_THRESHOLDS]
+    print("Counting similarities...")
+    SIM_THRESHOLDS = [0.3, 0.5, 0.7, 0.9, 1.0]
+    C_all = []
+    sim_all_failed = []
+    for j, smiles in tqdm(enumerate(smiles_list)):
+        try:
+            results_sim = fpe_all.similarity(
+                smiles,
+                metric="tanimoto",
+                threshold=min(SIM_THRESHOLDS),
+                n_workers=NUM_CPU
+            )
+            counts = []
+            for sim_threshold in SIM_THRESHOLDS:
+                c = sum(1 for r in results_sim if r[1] >= sim_threshold)
+                counts.append(c)
+            C_all.append(counts)
+            sim_all_failed.append(False)
+        except Exception:
+            C_all.append(None)
+            sim_all_failed.append(True)
 
-df = pd.concat([df, pd.DataFrame(C, columns=cols)], axis=1)
+    print("Loading FPSim2 database for the subset...")
+    fp_database_subset = os.path.join(checkpoints_dir, "fpsim2_database_subset.h5")
+    fpe_subset = FPSim2Engine(fp_database_subset, in_memory_fps=True)
 
-print("Loading FPSim2 database for the subset...")
-fp_database = os.path.join(checkpoints_dir, "fpsim2_database_subset.h5")
-fpe = FPSim2Engine(fp_database, in_memory_fps=True)
+    print("Counting similarities...")
+    C_subset = []
+    sim_subset_failed = []
+    for j, smiles in tqdm(enumerate(smiles_list)):
+        try:
+            results_sim = fpe_subset.similarity(
+                smiles,
+                metric="tanimoto",
+                threshold=min(SIM_THRESHOLDS),
+                n_workers=NUM_CPU
+            )
+            counts = []
+            for sim_threshold in SIM_THRESHOLDS:
+                c = sum(1 for r in results_sim if r[1] >= sim_threshold)
+                counts.append(c)
+            C_subset.append(counts)
+            sim_subset_failed.append(False)
+        except Exception:
+            C_subset.append(None)
+            sim_subset_failed.append(True)
 
-print("Counting similarities...")
-SIM_THRESHOLDS = [0.3, 0.5, 0.7, 0.9, 1.0]
-C = np.zeros((len(smiles_list), len(SIM_THRESHOLDS)), dtype=int)
-for j, smiles in tqdm(enumerate(smiles_list)):
-    results = fpe.similarity(
-        smiles,
-        metric="tanimoto",
-        threshold=min(SIM_THRESHOLDS),
-        n_workers=NUM_CPU
-    )
-    counts = [0]*len(SIM_THRESHOLDS)
-    for i, sim_threshold in enumerate(SIM_THRESHOLDS):
-        c = 0
-        for r in results:
-            if r[1] >= sim_threshold:
-                c += 1
-        counts[i] = c
-    C[j, :] = counts
+    # Assemble per-valid-molecule results back into the full results array
+    for j, orig_idx in enumerate(valid_indices):
+        sc = scaff_classes[j]
+        ca = C_all[j]
+        cs = C_subset[j]
+        # If any component failed, emit empty row
+        if sc is None or ca is None or cs is None:
+            results[orig_idx] = EMPTY_ROW
+        else:
+            row = [sc] + ca + cs
+            results[orig_idx] = row
 
-cols = [f"num_sim_{thresh}_subset".replace(".", "_") for thresh in SIM_THRESHOLDS]
+# Fill in empty rows for preprocessing failures and any remaining None slots
+for i in range(len(raw_smiles_list)):
+    if results[i] is None:
+        results[i] = EMPTY_ROW
 
-df = pd.concat([df, pd.DataFrame(C, columns=cols)], axis=1)
+# Build column names matching original code
+cols = ["scaff_class"]
+cols += [f"num_sim_{thresh}_all".replace(".", "_") for thresh in SIM_THRESHOLDS]
+cols += [f"num_sim_{thresh}_subset".replace(".", "_") for thresh in SIM_THRESHOLDS]
 
+df = pd.DataFrame(results, columns=cols)
 df.to_csv(output_file, index=False)
