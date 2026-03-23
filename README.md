@@ -2,7 +2,7 @@
 
 Check whether compounds match with known antibiotics available from GARDPs AntibioticDB database. The tool simply performs Morgan fingerprint (radius 2, 1024 bits) with the Tanimoto similarity. Multiple similarity cutoffs are tested. The model also performs a simple (Naive Bayes) binary classification based on Murcko and BRICS scaffolds.
 
-This model was incorporated on 2025-07-19.Last packaged on 2025-11-04.
+This model was incorporated on 2025-07-19.Last packaged on 2026-03-23.
 
 ## Information
 ### Identifiers
@@ -50,12 +50,12 @@ _10 of 11 columns are shown_
 ### Resource Consumption
 - **Model Size (Mb):** `2`
 - **Environment Size (Mb):** `926`
-- **Image Size (Mb):** `846.72`
+- **Image Size (Mb):** `847.63`
 
 **Computational Performance (seconds):**
-- 10 inputs: `28.3`
-- 100 inputs: `18.76`
-- 10000 inputs: `132.32`
+- 10 inputs: `41.83`
+- 100 inputs: `27.58`
+- 10000 inputs: `166.91`
 
 ### References
 - **Source Code**: [https://antibioticdb.com/](https://antibioticdb.com/)
