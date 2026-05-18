@@ -59,7 +59,7 @@ _10 of 11 columns are shown_
 
 ### References
 - **Source Code**: [https://antibioticdb.com/](https://antibioticdb.com/)
-- **Publication**: [https://pubmed.ncbi.nlm.nih.gov/29897476/](https://pubmed.ncbi.nlm.nih.gov/29897476/)
+- **Publication**: [https://doi.org/10.1093/jac/dky208](https://doi.org/10.1093/jac/dky208)
 - **Publication Type:** `Peer reviewed`
 - **Publication Year:** `2025`
 - **Ersilia Contributor:** [miquelduranfrigola](https://github.com/miquelduranfrigola)
