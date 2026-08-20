@@ -1,6 +1,6 @@
 # AntibioticDB similarity matches matches
 
-Counts how many compounds in AntibioticDB resemble a query at several Tanimoto thresholds, and separately judges whether its scaffold looks antibiotic-like. AntibioticDB was assembled by Farrell and colleagues to gather antibacterial agents including those abandoned mid-development, so matches can surface precedent that never reached the literature as approved drugs. Searches run against both the full database and a manually curated subset, giving a stricter comparison alongside the broad one.
+Check whether compounds match with known antibiotics available from GARDPs AntibioticDB database. The tool simply performs Morgan fingerprint (radius 2, 1024 bits) with the Tanimoto similarity. Multiple similarity cutoffs are tested. The model also performs a simple (Naive Bayes) binary classification based on Murcko and BRICS scaffolds.
 
 This model was incorporated on 2025-07-19.Last packaged on 2026-03-23.
 
@@ -23,7 +23,7 @@ This model was incorporated on 2025-07-19.Last packaged on 2026-03-23.
 ### Output
 - **Output Dimension:** `11`
 - **Output Consistency:** `Fixed`
-- **Interpretation:** Counts of similar AntibioticDB compounds at several similarity thresholds, plus a scaffold-based antibiotic score.
+- **Interpretation:** Number of compounds in AntiboticDB similar to the input compound above a given cutoff (num_sim) and probability of being an antibiotic compound based on scaffolds (scaff_class). Similarities are done against the full database (all) as well as a subset of manually curated compounds (254).
 
 Below are the **Output Columns** of the model:
 | Name | Type | Direction | Description |
