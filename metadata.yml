@@ -2,13 +2,13 @@ Identifier: eos6ojg
 Slug: antibioticdb-similarity-matches
 Status: Ready
 Title: AntibioticDB similarity matches matches
-Description: Counts how many compounds in AntibioticDB resemble a query at several
-  Tanimoto thresholds, and separately judges whether its scaffold looks antibiotic-like.
-  AntibioticDB was assembled by Farrell and colleagues to gather antibacterial agents
-  including those abandoned mid-development, so matches can surface precedent that
-  never reached the literature as approved drugs. Searches run against both the full
-  database and a manually curated subset, giving a stricter comparison alongside the
-  broad one.
+Description: Compares a query against AntibioticDB, the open database set up by Farrell
+  and colleagues and now hosted by GARDP, which records antibacterials in clinical
+  and pre-clinical development alongside 834 discontinued agents, so a match can surface
+  precedent that never reached the market. Ersilia built the search, counting compounds
+  above Tanimoto cut-offs from 0.3 to 1.0 on Morgan fingerprints across the full database
+  and a manually curated subset of 254, and adding a naive Bayes classifier that calls
+  the Murcko and BRICS scaffolds of the query antibiotic-like or not.
 Deployment:
   - Local
 Source: Local
@@ -22,8 +22,8 @@ Output:
   - Value
 Output Dimension: 11
 Output Consistency: Fixed
-Interpretation: Counts of similar AntibioticDB compounds at several similarity thresholds,
-  plus a scaffold-based antibiotic score.
+Interpretation: Counts of AntibioticDB matches at five Tanimoto cut-offs, full database
+  and curated subset, plus a binary scaffold call.
 Tag:
   - Antimicrobial activity
 Biomedical Area:
