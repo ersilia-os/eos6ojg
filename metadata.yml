@@ -2,13 +2,14 @@ Identifier: eos6ojg
 Slug: antibioticdb-similarity-matches
 Status: Ready
 Title: AntibioticDB similarity matches matches
-Description: Compares a query against AntibioticDB, the open database set up by Farrell
-  and colleagues and now hosted by GARDP, which records antibacterials in clinical
-  and pre-clinical development alongside 834 discontinued agents, so a match can surface
-  precedent that never reached the market. Ersilia built the search, counting compounds
-  above Tanimoto cut-offs from 0.3 to 1.0 on Morgan fingerprints across the full database
-  and a manually curated subset of 254, and adding a naive Bayes classifier that calls
-  the Murcko and BRICS scaffolds of the query antibiotic-like or not.
+Description: Compares a query against AntibioticDB, the open database set up by 
+  Farrell and colleagues and now hosted by GARDP, which records antibacterials 
+  in clinical and pre-clinical development alongside 834 discontinued agents, so
+  a match can surface precedent that never reached the market. Ersilia built the
+  search, counting compounds above Tanimoto cut-offs from 0.3 to 1.0 on Morgan 
+  fingerprints across the full database and a manually curated subset of 254, 
+  and adding a naive Bayes classifier that calls the Murcko and BRICS scaffolds 
+  of the query antibiotic-like or not.
 Deployment:
   - Local
 Source: Local
@@ -22,8 +23,8 @@ Output:
   - Value
 Output Dimension: 11
 Output Consistency: Fixed
-Interpretation: Counts of AntibioticDB matches at five Tanimoto cut-offs, full database
-  and curated subset, plus a binary scaffold call.
+Interpretation: Counts of AntibioticDB matches at five Tanimoto cut-offs, full 
+  database and curated subset, plus a binary scaffold call.
 Tag:
   - Antimicrobial activity
 Biomedical Area:
@@ -38,7 +39,7 @@ License: GPL-3.0-only
 Contributor: miquelduranfrigola
 Incorporation Date: '2025-07-19'
 Last Packaging Date: '2026-03-23'
-Release: v1.0.1
+Release: v1.0.2
 S3: https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos6ojg.zip
 DockerHub: https://hub.docker.com/r/ersiliaos/eos6ojg
 Docker Architecture: AMD64
