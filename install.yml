@@ -6,3 +6,4 @@ commands:
     - ["pip", "datamol", "0.12.5"]
     - ["pip", "tqdm", "4.67.1"]
     - ["pip", "scikit-learn", "1.7.1"]
+    - ["pip", "six", "1.17.0"]
