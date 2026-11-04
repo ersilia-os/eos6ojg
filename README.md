@@ -3,7 +3,7 @@
 Compares a query against AntibioticDB, the open database set up by Farrell and colleagues and now hosted by GARDP, which records antibacterials in clinical and pre-clinical development alongside 834 discontinued agents, so a match can surface precedent that never reached the market. Ersilia built the search, counting compounds above Tanimoto cut-offs from 0.3 to 1.0 on Morgan fingerprints across the full database and a manually curated subset of 254, and adding a naive Bayes classifier that calls the Murcko and BRICS scaffolds of the query antibiotic-like or not.
 
 This model was incorporated on 2025-07-19.
-Last packaged on 2026-03-23.
+Last packaged on 2026-11-04.
 
 ## Information
 ### Identifiers
@@ -45,18 +45,18 @@ _10 of 11 columns are shown_
 - **Source:** `Local`
 - **Source Type:** `Internal`
 - **DockerHub**: [https://hub.docker.com/r/ersiliaos/eos6ojg](https://hub.docker.com/r/ersiliaos/eos6ojg)
-- **Docker Architecture:** `AMD64`
+- **Docker Architecture:** `AMD64`, `ARM64`
 - **S3 Storage**: [https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos6ojg.zip](https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos6ojg.zip)
 
 ### Resource Consumption
 - **Model Size (Mb):** `2`
 - **Environment Size (Mb):** `978`
-- **Image Size (Mb):** `847.63`
+- **Image Size (Mb):** `273.74`
 
 **Computational Performance (seconds):**
-- 10 inputs: `41.83`
-- 100 inputs: `27.58`
-- 10000 inputs: `166.91`
+- 10 inputs: `28.47`
+- 100 inputs: `19.07`
+- 10000 inputs: `69.3`
 
 ### References
 - **Source Code**: [https://antibioticdb.com/](https://antibioticdb.com/)
