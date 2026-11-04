@@ -2,7 +2,8 @@
 
 Compares a query against AntibioticDB, the open database set up by Farrell and colleagues and now hosted by GARDP, which records antibacterials in clinical and pre-clinical development alongside 834 discontinued agents, so a match can surface precedent that never reached the market. Ersilia built the search, counting compounds above Tanimoto cut-offs from 0.3 to 1.0 on Morgan fingerprints across the full database and a manually curated subset of 254, and adding a naive Bayes classifier that calls the Murcko and BRICS scaffolds of the query antibiotic-like or not.
 
-This model was incorporated on 2025-07-19.Last packaged on 2026-03-23.
+This model was incorporated on 2025-07-19.
+Last packaged on 2026-03-23.
 
 ## Information
 ### Identifiers
