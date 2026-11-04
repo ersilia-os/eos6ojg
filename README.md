@@ -50,7 +50,7 @@ _10 of 11 columns are shown_
 
 ### Resource Consumption
 - **Model Size (Mb):** `2`
-- **Environment Size (Mb):** `926`
+- **Environment Size (Mb):** `978`
 - **Image Size (Mb):** `847.63`
 
 **Computational Performance (seconds):**
