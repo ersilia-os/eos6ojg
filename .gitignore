@@ -1,8 +1,8 @@
 .DS_Store
-model/checkpoints/ADB_all_found_smiles.csv
 model/checkpoints/chembl_*
 model/checkpoints/adb_*_scaffolds.tsv
 model/checkpoints/ADB*
+!model/checkpoints/ADB_all_found_smiles.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
